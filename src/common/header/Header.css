@@ -5,6 +5,7 @@
     padding-left: 16px;
     height: 36px;
     display: flex;
+    position: relative;
 }
 
 .logo {
@@ -18,4 +19,17 @@
     50% {
         transform: rotateY(360deg);
     }
+}
+
+.header-buttons-div
+{
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#bookShowButton
+{
+    margin-right: 8px;
+    display: none;
 }
