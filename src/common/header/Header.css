@@ -28,6 +28,10 @@
     margin-right: 0;
 }
 
+#logoutButton{
+    display: none;
+}
+
 #bookShowButton
 {
     margin-right: 8px;
