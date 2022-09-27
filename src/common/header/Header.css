@@ -1,0 +1,21 @@
+.header {
+    background-color: #222;
+    padding: 8px;
+    padding-right: 32px;
+    padding-left: 16px;
+    height: 36px;
+    display: flex;
+}
+
+.logo {
+    background-color: #ff7f7f;
+    height: 35px;
+    animation: rotateLogo 8s infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotateLogo {
+    50% {
+        transform: rotateY(360deg);
+    }
+}
