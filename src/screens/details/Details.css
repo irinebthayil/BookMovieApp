@@ -1,0 +1,22 @@
+#backTohome:hover{
+    cursor: pointer;
+}
+
+.main-div-container
+{
+    display: flex;
+}
+
+.container1
+{
+    width: 20%;
+    margin-left: 24px;
+}
+
+.container2 {
+    width: 60%;
+}
+
+.container3 {
+    width: 20%;
+}
