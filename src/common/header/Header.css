@@ -56,3 +56,8 @@
     flex-direction: column;
     align-items: center;
 }
+
+.required-error-text
+{
+    display: none;
+}
