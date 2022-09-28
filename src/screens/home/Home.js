@@ -19,6 +19,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
+import { Link } from 'react-router-dom';
 
 // styles needed for grids, card and card component
 const styles = theme => ({
@@ -168,7 +169,7 @@ function Home(props) {
 
     function onMovieTileClicked(movieId)
     {
-        console.log(movieId);
+        // history.push("/movie/:" + movieId);
     }
     
     return (
@@ -180,12 +181,12 @@ function Home(props) {
             <div className={classes.root}>
                 <GridList className={classes.gridList} cellHeight={250} cols={6}>
                     {upcomingMoviesList.map(tile => (
-                        <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
+                        <Link to="/movie/:id" params={{ id: tile.id }}><GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
                             <img src={tile.poster_url} alt={tile.title}/>
                             <GridListTileBar
                                 title={tile.title}
                             />
-                        </GridListTile>
+                        </GridListTile></Link>
                     ))}
                 </GridList>
             </div>

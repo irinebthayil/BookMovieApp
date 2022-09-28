@@ -10,7 +10,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText'
 
-function Header() {
+function Header(props) {
 
     // to control opening and closing of Login/Register Modal
     const [open, setOpen] = React.useState(false);
@@ -41,6 +41,17 @@ function Header() {
             document.getElementById('logoutButton').style.display = "block";
         }
     }, [access_token])
+
+    React.useEffect(() => {
+        if (props.source == "detailsPage") {
+            document.getElementById('bookShowButton').style.display = "block";
+        }
+        else
+        {
+            document.getElementById('bookShowButton').style.display = "none";
+        }
+
+    }, [props.source])
 
     const onLoginClicked = () => {
         setOpen(true);
