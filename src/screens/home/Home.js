@@ -6,7 +6,21 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
 
+// styles needed for grids, card and card component
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -21,13 +35,31 @@ const styles = theme => ({
     gridListGrid: {
         width: '100%'
     },
+    cardRoot: {
+        minWidth: 240,
+    },
+    cardContentElements: {
+        margin: theme.spacing.unit,
+        minWidth: 240,
+        maxWidth: 240,
+    },
+    title: {
+        color: theme.palette.primary.light,
+        margin: theme.spacing.unit,
+        minWidth: 240,
+        maxWidth: 240,
+    },
+    
 });
 
 function Home(props) {
     const { classes } = props;
     const [upcomingMoviesList, setUpcomingMoviesList] = React.useState([]);
     const [releasedMoviesList, setReleasedMoviesList] = React.useState([]);
+    const genres = [];
+    const artists = [];
 
+    // load list of upcoming movies, i.e, movies with status as PUBLISHED
     async function loadUpcomingMovies()
     {
         try {
@@ -52,6 +84,7 @@ function Home(props) {
         }
     }
 
+    // load list of released movies, i.e, movies with status as RELEASED
     async function loadReleasedMovies() {
         try {
             const rawResponse = await fetch('/api/v1/movies?status=RELEASED', {
@@ -85,6 +118,8 @@ function Home(props) {
         <Fragment>
             <Header />
             <div className="upcoming-movies-header">Upcoming Movies</div>
+
+            {/* Horizontal Scrollable grid list to display upcoming movies*/}
             <div className={classes.root}>
                 <GridList className={classes.gridList} cellHeight={250} cols={6}>
                     {upcomingMoviesList.map(tile => (
@@ -101,6 +136,8 @@ function Home(props) {
                     ))}
                 </GridList>
             </div>
+
+            {/* Grid to display released movies */}
             <div className="released-movies-parent-container">
                 <div className="flex-div" style={{width: '76%'}}>
                     <div className={classes.root}>
@@ -117,8 +154,72 @@ function Home(props) {
                         </GridList>
                     </div>
                 </div>
+
+                {/* div to display filters */}
                 <div className="flex-div" style={{ width: '24%' }}>
-                    
+                    <Card className={classes.cardRoot} variant="outlined">
+                        <CardContent className={classes.cardContent}>
+                            <Typography className={classes.title}>FIND MOVIES BY:</Typography>
+                            <FormControl className={classes.cardContentElements}>
+                                <InputLabel htmlFor="movie_name">Movie Name</InputLabel>
+                                <Input id="movie_name"/>
+                            </FormControl>
+                            <FormControl className={classes.cardContentElements}>
+                                <InputLabel htmlFor="genres">Genres</InputLabel>
+                                <Select
+                                    id="genres"
+                                    multiple
+                                    value={[]}
+                                    input={<Input />}
+                                    >
+                                    {genres.map((genre) => (
+                                        <MenuItem key={genre} value={genre}>
+                                            <Checkbox />
+                                            <ListItemText primary={genre} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.cardContentElements}>
+                                <InputLabel htmlFor="artists">Artists</InputLabel>
+                                <Select
+                                    id="artists"
+                                    multiple
+                                    value={[]}
+                                    input={<Input />}
+                                    >
+                                    {artists.map((artist) => (
+                                        <MenuItem key={artist} value={artist}>
+                                            <Checkbox />
+                                            <ListItemText primary={artist} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl className={classes.cardContentElements}>
+                                <TextField
+                                    id="release_date_start"
+                                    label="Release Date Start"
+                                    InputLabelProps={{ shrink: true}}
+                                    type="date"
+                                    placeholder="dd-mm-yyyy"
+                                />
+                            </FormControl>
+                            <FormControl className={classes.cardContentElements}>
+                                <TextField
+                                    id="release_date_end"
+                                    label="Release Date End"
+                                    InputLabelProps={{ shrink: true }}
+                                    type="date"
+                                    placeholder="dd-mm-yyyy"
+                                />
+                            </FormControl>
+                            <CardActions>
+                                <Button className={classes.cardContentElements} id="applyFilterButton" variant="contained" color="primary">APPLY</Button>
+                            </CardActions>
+                            
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </Fragment>
