@@ -1,14 +1,12 @@
-#backTohome:hover{
+#backTohome:hover {
     cursor: pointer;
 }
 
-.main-div-container
-{
+.main-div-container {
     display: flex;
 }
 
-.container1
-{
+.container1 {
     width: 20%;
     margin-left: 24px;
 }
@@ -19,4 +17,8 @@
 
 .container3 {
     width: 20%;
+}
+
+.star:hover {
+    cursor: pointer;
 }

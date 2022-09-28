@@ -53,7 +53,7 @@ const styles = theme => ({
         minWidth: 240,
         maxWidth: 240,
     },
-    
+
 });
 
 function Home(props) {
@@ -64,8 +64,7 @@ function Home(props) {
     const [artistsList, setArtistsList] = React.useState([]);
 
     // load list of upcoming movies, i.e, movies with status as PUBLISHED
-    async function loadUpcomingMovies()
-    {
+    async function loadUpcomingMovies() {
         try {
             const rawResponse = await fetch('/api/v1/movies?status=PUBLISHED', {
                 method: 'GET',
@@ -167,11 +166,10 @@ function Home(props) {
         loadArtists();
     }, []);
 
-    function onMovieTileClicked(movieId)
-    {
+    function onMovieTileClicked(movieId) {
         // history.push("/movie/:" + movieId);
     }
-    
+
     return (
         <Fragment>
             <Header />
@@ -181,19 +179,19 @@ function Home(props) {
             <div className={classes.root}>
                 <GridList className={classes.gridList} cellHeight={250} cols={6}>
                     {upcomingMoviesList.map(tile => (
-                        <Link to="/movie/:id" params={{ id: tile.id }}><GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
-                            <img src={tile.poster_url} alt={tile.title}/>
+                        <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
+                            <img src={tile.poster_url} alt={tile.title} />
                             <GridListTileBar
                                 title={tile.title}
                             />
-                        </GridListTile></Link>
+                        </GridListTile>
                     ))}
                 </GridList>
             </div>
 
             {/* Grid to display released movies */}
             <div className="released-movies-parent-container">
-                <div className="flex-div" style={{width: '76%'}}>
+                <div className="flex-div" style={{ width: '76%' }}>
                     <div className={classes.root}>
                         <GridList cellHeight={350} cols={4} className={classes.gridListGrid}>
                             {releasedMoviesList.map(tile => (
@@ -216,7 +214,7 @@ function Home(props) {
                             <Typography className={classes.title}>FIND MOVIES BY:</Typography>
                             <FormControl className={classes.cardContentElements}>
                                 <InputLabel htmlFor="movie_name">Movie Name</InputLabel>
-                                <Input id="movie_name"/>
+                                <Input id="movie_name" />
                             </FormControl>
                             <FormControl className={classes.cardContentElements}>
                                 <InputLabel htmlFor="genres">Genres</InputLabel>
@@ -225,7 +223,7 @@ function Home(props) {
                                     multiple
                                     value={[]}
                                     input={<Input />}
-                                    >
+                                >
                                     {genresList.map((genreItem) => (
                                         <MenuItem key={genreItem.id} value={genreItem.genre}>
                                             <Checkbox />
@@ -241,7 +239,7 @@ function Home(props) {
                                     multiple
                                     value={[]}
                                     input={<Input />}
-                                    >
+                                >
                                     {artistsList.map((artist) => (
                                         <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
                                             <Checkbox />
@@ -254,7 +252,7 @@ function Home(props) {
                                 <TextField
                                     id="release_date_start"
                                     label="Release Date Start"
-                                    InputLabelProps={{ shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     type="date"
                                     placeholder="dd-mm-yyyy"
                                 />
@@ -271,13 +269,13 @@ function Home(props) {
                             <CardActions>
                                 <Button className={classes.cardContentElements} id="applyFilterButton" variant="contained" color="primary">APPLY</Button>
                             </CardActions>
-                            
+
                         </CardContent>
                     </Card>
                 </div>
             </div>
         </Fragment>
-        
+
     );
 }
 

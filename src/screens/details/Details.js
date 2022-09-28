@@ -7,6 +7,8 @@ import YouTube from 'react-youtube';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import StarBorderOutlined from '@material-ui/icons/StarBorderOutlined';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -18,7 +20,7 @@ const styles = theme => ({
     gridListGrid: {
         width: '100%'
     },
-    backToHomeBtn: 
+    backToHomeBtn:
     {
         marginLeft: 24,
         marginTop: 8,
@@ -35,17 +37,15 @@ const styles = theme => ({
 
 });
 
-function Details(props)
-{
+function Details(props) {
     const { classes } = props;
     const id = "52975022-a235-11e8-9077-720006ceb890";
     const backtohomeText = "< Back to Home"
     const [movieDetails, setMovieDetails] = React.useState({});
-    const [artistDetails, setArtistDetails] = React.useState({});
+    const [artistDetails, setArtistDetails] = React.useState([]);
 
-    async function loadMovieDetails()
-    {
-        let url = '/api/v1/movies/'+id;
+    async function loadMovieDetails() {
+        let url = '/api/v1/movies/' + id;
         try {
             const rawResponse = await fetch(url, {
                 method: 'GET',
@@ -57,7 +57,7 @@ function Details(props)
 
             const result = await rawResponse.json();
             if (rawResponse.ok) {
-                setMovieDetails(result);                
+                setMovieDetails(result);
             } else {
                 const error = new Error();
                 error.message = result.message || 'Something went wrong.';
@@ -107,17 +107,22 @@ function Details(props)
         },
     };
 
+    function onStarClicked(e)
+    {
+        e.target.style.color = "yellow";
+    }
 
-    return(
+
+    return (
         <Fragment>
-            <Header source="detailsPage"/>
-            <Typography id="backTohome" className={classes.backToHomeBtn}>{backtohomeText}</Typography>
+            <Header source="detailsPage" />
+            <Link to="/"><Typography id="backTohome" className={classes.backToHomeBtn} >{backtohomeText}</Typography></Link>
             <div className="main-div-container">
                 <div className="container1">
                     <img src={movieDetails.poster_url}></img>
                 </div>
                 <div className="container2">
-                    <Typography variant="heading" component="h2">
+                    <Typography variant="headline" component="h2">
                         {movieDetails.title}
                     </Typography>
                     <Typography>
@@ -144,12 +149,19 @@ function Details(props)
                     <Typography>
                         <strong>Rate this movie: </strong>
                     </Typography>
+
                     <Typography className={classes.textSpacing2}>
-                        <strong>Artists: </strong>
+                        <strong>Artists: </strong><br></br>
+                        <StarBorderOutlined className="star" onClick={onStarClicked} />
+                        <StarBorderOutlined className="star" onClick={onStarClicked} />
+                        <StarBorderOutlined className="star" onClick={onStarClicked} />
+                        <StarBorderOutlined className="star" onClick={onStarClicked} />
+                        <StarBorderOutlined className="star" onClick={onStarClicked} />
                     </Typography>
-                    {/* <div className={classes.root}>
-                        <GridList cellHeight={350} cols={2} className={classes.gridListGrid}>
-                            {movieDetails.artists.map(tile => (
+
+                    <div className={classes.root}>
+                        <GridList cellHeight={250} cols={2} className={classes.gridListGrid}>
+                            {artistDetails.map(tile => (
                                 <GridListTile key={tile.id} className={classes.tile}>
                                     <img src={tile.profile_url} alt={tile.first_name} />
                                     <GridListTileBar
@@ -158,7 +170,7 @@ function Details(props)
                                 </GridListTile>
                             ))}
                         </GridList>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </Fragment>
