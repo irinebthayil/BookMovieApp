@@ -56,8 +56,8 @@ function Home(props) {
     const { classes } = props;
     const [upcomingMoviesList, setUpcomingMoviesList] = React.useState([]);
     const [releasedMoviesList, setReleasedMoviesList] = React.useState([]);
-    const genres = [];
-    const artists = [];
+    const [genresList, setGenresList] = React.useState([]);
+    const [artistsList, setArtistsList] = React.useState([]);
 
     // load list of upcoming movies, i.e, movies with status as PUBLISHED
     async function loadUpcomingMovies()
@@ -108,9 +108,59 @@ function Home(props) {
         }
     }
 
+    // load list of all genres to display in filters
+    async function loadGenres() {
+        try {
+            const rawResponse = await fetch('/api/v1/genres', {
+                method: 'GET',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json;charset=UTF-8"
+                }
+            });
+
+            const result = await rawResponse.json();
+            if (rawResponse.ok) {
+                setGenresList(result.genres)
+            } else {
+                const error = new Error();
+                error.message = result.message || 'Something went wrong.';
+                throw error;
+            }
+        } catch (e) {
+            alert(`Error: ${e.message}`);
+        }
+    }
+
+    // load list of all artists to display in filters
+    async function loadArtists() {
+        try {
+            const rawResponse = await fetch('/api/v1/artists', {
+                method: 'GET',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json;charset=UTF-8"
+                }
+            });
+
+            const result = await rawResponse.json();
+            if (rawResponse.ok) {
+                setArtistsList(result.artists)
+            } else {
+                const error = new Error();
+                error.message = result.message || 'Something went wrong.';
+                throw error;
+            }
+        } catch (e) {
+            alert(`Error: ${e.message}`);
+        }
+    }
+
     React.useEffect(() => {
         loadUpcomingMovies();
         loadReleasedMovies();
+        loadGenres();
+        loadArtists();
     }, []);
 
     
@@ -172,10 +222,10 @@ function Home(props) {
                                     value={[]}
                                     input={<Input />}
                                     >
-                                    {genres.map((genre) => (
-                                        <MenuItem key={genre} value={genre}>
+                                    {genresList.map((genreItem) => (
+                                        <MenuItem key={genreItem.id} value={genreItem.genre}>
                                             <Checkbox />
-                                            <ListItemText primary={genre} />
+                                            <ListItemText primary={genreItem.genre} />
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -188,10 +238,10 @@ function Home(props) {
                                     value={[]}
                                     input={<Input />}
                                     >
-                                    {artists.map((artist) => (
-                                        <MenuItem key={artist} value={artist}>
+                                    {artistsList.map((artist) => (
+                                        <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
                                             <Checkbox />
-                                            <ListItemText primary={artist} />
+                                            <ListItemText primary={artist.first_name + " " + artist.last_name} />
                                         </MenuItem>
                                     ))}
                                 </Select>
