@@ -35,6 +35,9 @@ const styles = theme => ({
     gridListGrid: {
         width: '100%'
     },
+    tile: {
+        cursor: 'pointer',
+    },
     cardRoot: {
         minWidth: 240,
     },
@@ -163,6 +166,10 @@ function Home(props) {
         loadArtists();
     }, []);
 
+    function onMovieTileClicked(movieId)
+    {
+        console.log(movieId);
+    }
     
     return (
         <Fragment>
@@ -173,14 +180,10 @@ function Home(props) {
             <div className={classes.root}>
                 <GridList className={classes.gridList} cellHeight={250} cols={6}>
                     {upcomingMoviesList.map(tile => (
-                        <GridListTile key={tile.id}>
-                            <img src={tile.poster_url} alt={tile.title} />
+                        <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
+                            <img src={tile.poster_url} alt={tile.title}/>
                             <GridListTileBar
                                 title={tile.title}
-                                classes={{
-                                    root: classes.titleBar,
-                                    title: classes.title,
-                                }}
                             />
                         </GridListTile>
                     ))}
@@ -193,7 +196,7 @@ function Home(props) {
                     <div className={classes.root}>
                         <GridList cellHeight={350} cols={4} className={classes.gridListGrid}>
                             {releasedMoviesList.map(tile => (
-                                <GridListTile key={tile.id}>
+                                <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
                                     <img src={tile.poster_url} alt={tile.title} />
                                     <GridListTileBar
                                         title={tile.title}
