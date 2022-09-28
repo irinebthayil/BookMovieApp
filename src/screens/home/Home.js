@@ -166,10 +166,6 @@ function Home(props) {
         loadArtists();
     }, []);
 
-    function onMovieTileClicked(movieId) {
-        // history.push("/movie/:" + movieId);
-    }
-
     return (
         <Fragment>
             <Header />
@@ -179,12 +175,15 @@ function Home(props) {
             <div className={classes.root}>
                 <GridList className={classes.gridList} cellHeight={250} cols={6}>
                     {upcomingMoviesList.map(tile => (
-                        <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
-                            <img src={tile.poster_url} alt={tile.title} />
-                            <GridListTileBar
-                                title={tile.title}
-                            />
+                        <GridListTile key={tile.id} className={classes.tile}>
+                            <Link className={classes.link} to={"/movie/" + tile.id}>
+                                <img src={tile.poster_url} alt={tile.title} />
+                                <GridListTileBar
+                                    title={tile.title}
+                                />
+                            </Link>
                         </GridListTile>
+
                     ))}
                 </GridList>
             </div>
@@ -195,12 +194,15 @@ function Home(props) {
                     <div className={classes.root}>
                         <GridList cellHeight={350} cols={4} className={classes.gridListGrid}>
                             {releasedMoviesList.map(tile => (
-                                <GridListTile key={tile.id} className={classes.tile} onClick={() => onMovieTileClicked(tile.id)}>
-                                    <img src={tile.poster_url} alt={tile.title} />
-                                    <GridListTileBar
-                                        title={tile.title}
-                                        subtitle={<span>Release Date: {tile.release_date}</span>}
-                                    />
+                                <GridListTile key={tile.id} className={classes.tile}>
+                                    <Link className={classes.link} to={"/movie/" + tile.id}>
+                                        <img src={tile.poster_url} alt={tile.title} />
+                                        <GridListTileBar
+                                            title={tile.title}
+                                            subtitle={<span>Release Date: {tile.release_date}</span>}
+                                        />
+                                    </Link>
+                                    
                                 </GridListTile>
                             ))}
                         </GridList>

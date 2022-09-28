@@ -39,7 +39,7 @@ const styles = theme => ({
 
 function Details(props) {
     const { classes } = props;
-    const id = "52975022-a235-11e8-9077-720006ceb890";
+    const id = props.match.params.id;
     const backtohomeText = "< Back to Home"
     const [movieDetails, setMovieDetails] = React.useState({});
     const [artistDetails, setArtistDetails] = React.useState([]);
@@ -115,7 +115,7 @@ function Details(props) {
 
     return (
         <Fragment>
-            <Header source="detailsPage" />
+            <Header source="detailsPage" id={id}/>
             <Link to="/"><Typography id="backTohome" className={classes.backToHomeBtn} >{backtohomeText}</Typography></Link>
             <div className="main-div-container">
                 <div className="container1">

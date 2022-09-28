@@ -8,7 +8,8 @@ import Tab from '@material-ui/core/Tab';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText'
+import FormHelperText from '@material-ui/core/FormHelperText';
+import { Link } from 'react-router-dom';
 
 function Header(props) {
 
@@ -56,10 +57,6 @@ function Header(props) {
     const onLoginClicked = () => {
         setOpen(true);
     };
-
-    const onBookShowClicked = () => {
-        console.log("Book Show Clicked");
-    }
 
     const onLogoutClicked = () => {
         window.sessionStorage.removeItem('access-token');
@@ -270,7 +267,7 @@ function Header(props) {
 
             <img src={logo} alt="Logo" className="logo"></img>
             <div className="header-buttons-div">
-                <Button id="bookShowButton" variant="contained" color="primary" onClick={onBookShowClicked}>Book Show</Button>
+                <Link to={"/bookshow/" + props.id }><Button id="bookShowButton" variant="contained" color="primary">Book Show</Button></Link>
                 <Button id="loginButton" variant="contained" onClick={onLoginClicked}>Login</Button>
                 <Button id="logoutButton" variant="contained" onClick={onLogoutClicked}>Logout</Button>
             </div>
